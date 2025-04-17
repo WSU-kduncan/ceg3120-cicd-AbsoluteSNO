@@ -25,5 +25,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/my-repo:latest
-            ${{ secrets.DOCKER_USERNAME }}/my-repo:${{ github.sha }}
+            ${{ secrets.DOCKER_USERNAME }}/earl-ceg3120:latest
+            ${{ secrets.DOCKER_USERNAME }}/earl-ceg3120:${{ github.sha }}
