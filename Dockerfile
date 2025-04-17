@@ -1,26 +1,23 @@
-# Use the Node.js 18 Bullseye image
-FROM node:18-bullseye
+# Base image with Node.js 18 on Alpine (lightweight)
+FROM node:18-alpine
 
-# Set working directory in the container
+# Set working directory in container
 WORKDIR /app
 
-# Copy package files to leverage Docker caching
+# Copy package files first to leverage Docker caching
 COPY angular-site/package*.json ./
 
-# Install dependencies
-RUN npm install
+# Install dependencies using clean install (exact versions from lockfile)
+RUN npm ci
 
-# Copy the entire Angular app source code
+# Copy Angular application source code
 COPY angular-site/ .
 
-# Build the Angular app for production
+# Build Angular application for production
 RUN npm run build -- --configuration=production
 
-# Install a lightweight static server globally
+# Install lightweight static server (alternatively use nginx in multi-stage build)
 RUN npm install -g serve
 
-# Expose the port the server will run on
-EXPOSE 3000
-
-# Command to serve the built Angular app
+# Specify runtime command (serve built application)
 CMD ["serve", "-s", "dist", "-l", "3000"]
