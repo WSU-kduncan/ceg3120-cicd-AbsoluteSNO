@@ -1,5 +1,4 @@
 # Project 4, Step 1
-
 ## Docker Setup for Windows
 1. Visit the [Docker desktop site](https://www.docker.com/products/docker-desktop/) and scroll until you see "Download Docker Desktop."
 2. Hover over the aformentioned button and click "Download for Windows - AMD64."
@@ -48,6 +47,7 @@ To confirm installation, start Docker Desktop and run this command in Powershell
 * Click "generate new token" and add the relevant information.
   * NOTE: The Personal access token will NEVER expire if you do not change the Expiration date.
   * NOTE: You cannot read any of your private repos, write to any of you repos, nor delete any repos without changing the Access permissions.
+  * For this specific instance, I made it only able to Read, Write, and Delete, as I am in control of everything that happens on my computer.
 * To authenticate into DockerHub, login with `docker login`. Enter your username, but NOT your password! This is what we made the PAT for.
 * Instead, paste your PAT into the password slot.
 * To push your container image to your DockerHub repo, we must first tag the image: `docker tag imageName yourDockerHubUsername/yourRepoName:tagName`
@@ -55,3 +55,31 @@ To confirm installation, start Docker Desktop and run this command in Powershell
 * Next, push the image: `docker push yourDockerHubUsername/yourRepoName:tagName`
   * NOTE: Replace the example information with your actual information.
 * This will link your image to your repo.
+
+# Project 4, Step 2
+## Configuring GitHub Repository Secrets
+* To create a PAT, [go to DockerHub](https://hub.docker.com/) and click your profile picture in the top right.
+* Next, click "Account settings" and click "Personal access tokens."
+* Click "generate new token" and add the relevant information.
+  * NOTE: The Personal access token will NEVER expire if you do not change the Expiration date.
+  * NOTE: You cannot read any of your private repos, write to any of you repos, nor delete any repos without changing the Access permissions.
+  * For this specific instance, I made it only able to Read and Write, as I do not want to delete a repo via automation ever.
+* To set repository secrets, go to your repo.
+* Next, go to the "Settings" tab marked with a little gear.
+* This will take you to a page with a side bar that says "Secrets and variables" if you look near the bottom.
+* Clicking on it will show a dropdown menu where you will click "actions."
+* Click "New repository secret."
+* For this project, I made two secrets: `DOCKER_USERNAME` and `DOCKER_TOKEN`, which are used for credentials for building and pushing container images to my DockerHub repository.
+## CI with GitHub Actions
+### Description and Actions
+* When someone pushes to main, my workflow will authenticate via `docker/login-action`, using the `DOCKER_USERNAME` and `DOCKER_TOKEN` secrets.
+* Afterwards, it will use `docker/build-push-action` to build the image from the root of the repo and push two images:
+  * One with the `latest` tag to indicate the most recent version.
+  * One with the tag of the commit's SHA for documentation and preservation purposes.
+The workflow file: [build-and-push.yml](./.github/workflows/build-and-push.yml)
+## Testing and Validation
+* To test that your workflow worked, you can go to the "Actions" tab in your repo, marked with a play button.
+* If your workflow is still working, you will see a yellow light. You can watch its progress by clicking on it. If you are not interested, you can just wait.
+* If it turns green, horray! The workflow completed without errors.
+* To actually see if it pushed to the repo, [go to your repos.](https://hub.docker.com/repositories)
+* Immediately, you should see the "Last Pushed" section on your repo says "less than a minute ago" or something else depending on how long it took you to get here.
