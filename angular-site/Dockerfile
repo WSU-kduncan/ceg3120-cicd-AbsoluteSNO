@@ -10,9 +10,11 @@ RUN npm install
 # Copy source
 COPY angular-site/ ./
 
+# Make sure ng CLI is executable
+RUN chmod +x node_modules/.bin/ng
+
 # Build the app (make sure build script exists)
 RUN npm run build
-RUN chmod +x node_modules/.bin/ng
 
 # Stage 2: Serve with nginx
 FROM nginx:alpine
