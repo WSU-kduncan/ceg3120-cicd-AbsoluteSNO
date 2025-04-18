@@ -12,6 +12,7 @@ COPY angular-site/ ./
 
 # Build the app (make sure build script exists)
 RUN npm run build
+RUN chmod +x node_modules/.bin/ng
 
 # Stage 2: Serve with nginx
 FROM nginx:alpine
