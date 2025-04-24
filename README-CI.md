@@ -119,7 +119,9 @@ To confirm installation, start Docker Desktop and run this command in Powershell
 * Afterwards, it will use `docker/build-push-action` to build the image from the root of the repo and push two images:
   * One with the `latest` tag to indicate the most recent version.
   * One with the tag of the commit's SHA for documentation and preservation purposes.
+
 The workflow file: [build-and-push.yml](./.github/workflows/build-and-push.yml)
+
 The Dockerfile: [Dockerfile](./angular-site/Dockerfile)
 ### Testing and Validation
 * To test that your workflow worked, you can go to the "Actions" tab in your repo, marked with a play button.
