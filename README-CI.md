@@ -135,3 +135,11 @@ https://docs.docker.com/build/ci/github-actions/
 https://github.com/marketplace/actions/build-and-push-docker-images
 https://docs.docker.com/reference/cli/docker/
 https://docs.docker.com/get-started/docker-concepts/running-containers/publishing-ports/
+
+## AI Resources Used
+* All prompts were given to ChatGPT-4
+### Prompts Used
+* Please show me the structure of a Dockerfile
+* Please show me the structure of a GitHub workflow file
+* What are some cool things I can do with Continuous Integration with Dockerhub and GitHub?
+* You mentioned Versioned, Tagged Builds. How do I do that?
