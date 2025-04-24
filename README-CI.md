@@ -120,6 +120,7 @@ To confirm installation, start Docker Desktop and run this command in Powershell
   * One with the `latest` tag to indicate the most recent version.
   * One with the tag of the commit's SHA for documentation and preservation purposes.
 The workflow file: [build-and-push.yml](./.github/workflows/build-and-push.yml)
+The Dockerfile: [Dockerfile](./angular-site/Dockerfile)
 ### Testing and Validation
 * To test that your workflow worked, you can go to the "Actions" tab in your repo, marked with a play button.
 * If your workflow is still working, you will see a yellow light. You can watch its progress by clicking on it. If you are not interested, you can just wait.
