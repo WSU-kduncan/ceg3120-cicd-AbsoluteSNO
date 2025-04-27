@@ -29,6 +29,9 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
           flavor: |
             latest=false  # Ensures 'latest' only updates on main branch pushes
+          notes: |
+            match-tag: 'v.*'  # Explicitly match version tags
+            sort: 'reverse'   # Ensure newest tags are checked first
 
       - name: Log in to DockerHub
         uses: docker/login-action@v2
