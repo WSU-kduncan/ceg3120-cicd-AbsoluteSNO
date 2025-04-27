@@ -13,17 +13,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Extract version from package.json
-        id: version
-        run: |
-          VERSION=$(jq -r '.version' ./angular-site/package.json)
-          MAJOR=$(echo $VERSION | cut -d. -f1)
-          MINOR=$(echo $VERSION | cut -d. -f2)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "MAJOR=$MAJOR" >> $GITHUB_ENV
-          echo "MINOR=$MINOR" >> $GITHUB_ENV
-          echo "MAJOR_MINOR=$MAJOR.$MINOR" >> $GITHUB_ENV
-          echo "Extracted version: $VERSION (Major: $MAJOR, Minor: $MINOR)"
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ secrets.DOCKER_USERNAME }}/earl-ceg3120
+          tags: |
+            type=raw,value=latest
+            type=semver,pattern={{major}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha
 
       - name: Log in to DockerHub
         uses: docker/login-action@v2
@@ -37,8 +37,5 @@ jobs:
           context: .
           file: ./angular-site/Dockerfile
           push: true
-          tags: |
-            ${{ secrets.DOCKER_USERNAME }}/earl-ceg3120:latest
-            ${{ secrets.DOCKER_USERNAME }}/earl-ceg3120:${{ github.sha }}
-            ${{ secrets.DOCKER_USERNAME }}/earl-ceg3120:${{ env.MAJOR }}
-            ${{ secrets.DOCKER_USERNAME }}/earl-ceg3120:${{ env.MAJOR_MINOR }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
