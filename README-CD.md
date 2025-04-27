@@ -31,3 +31,15 @@
 * The next step is to check that the Docker image works correctly when pulled from the Dockerhub repo.
 * You can run a command like this to run the Docker image: ```docker run -d -p 8080:80 --name exampleName DockerhubUsername/repoName:latest```
 * Going to [http://localhost:8080](http://localhost:8080) will send you to the website content from the Docker image.
+## Part 2
+### EC2 Instance Details
+* IP Address: 3.82.44.79
+* AMI Information: ami-0e449927258d45bc4
+* Instance Type: t2.medium
+* Volume size: 30 GiB
+* Security Group Config:
+ * Inbound: All traffic from my home IP (184.57.29.80/32)
+ * Outbound: All traffic
+* Justification:
+ * Only I need to ssh into my instance and serve content to myself.
+* SSH Command: ssh -i ./keys/labsuserP5.pem ubuntu@3.82.44.79
