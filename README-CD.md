@@ -1,3 +1,33 @@
 # Continuous Deployment Project Overview
 ## Part 1
 ### Generating Tags
+* To see tags in a Git repo, you can run this command while inside the repo directory: ```git tag --list```
+* You can also go to the repo's home page and click the ```Tags``` button under the Releases category on the right.
+* To generate a tag, run ```git tag -a vX.X.X```.
+* To push the tag, you can run ```git push vX.X.X```.
+### Semantic Versioning Container Images with GitHub Actitaons
+* My workflow file is [build-and-push.yml](./.github/workflows/build-and-pushmyml).
+* In order, the workflow file will do the following:
+  * Create an Ubuntu image to run code on,
+  * Pull from my repo to work on its content,
+  * Authenticate to Dockerhub,
+  * Build the Docker image based on the Dockerfile in the pulled repo,
+  * Push the Docker image three times, one to Latest, one to vX, and one to vX.X,
+  * Log out of Dockerhub,
+  * Remove used files,
+  * and Stop all processes.
+* If the workflow file is used in a different repo, you must do the following:
+  * Add DOCKER_USERNAME and DOCKER_TOKEN to GitHub secrets,
+  * Either change line 46 to correctly identify the Dockerfile or put it in ./angular-site/,
+  * and Change line 25 to your Dockerhub repo name.
+### Testing & Validating
+* To test that your workflow did its tasking, go over to your repo and select the Actions button above the content that is currently loaded.
+* Next, click on the topmost item.
+* If there is a red circle with an x in it, the workflow file has failed to complete its tasking.
+  * There should be an "Annotations" section with the error inside.
+* If there is a yellow spinning circle, the workflow file hasn't finished running yet.
+* If there is a green circle with a check mark in it, the workflow file has completed its tasking.
+* To verify that it did what you wanted it to, go to Dockerhub and check that your repo has multiple tagged versions.
+* The next step is to check that the Docker image works correctly when pulled from the Dockerhub repo.
+* You can run a command like this to run the Docker image: ```docker run -d -p 8080:80 --name exampleName DockerhubUsername/repoName:latest```
+* Going to [http://localhost:8080](http://localhost:8080) will send you to the website content from the Docker image.
