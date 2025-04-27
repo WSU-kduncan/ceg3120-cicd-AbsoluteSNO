@@ -1,0 +1,30 @@
+{
+  "id": "dockerhub-deploy",
+  "execute-command": "../deployment/deploy.sh",
+  "command-working-directory": "../angular-site",
+  "response-message": "Deployment triggered successfully",
+  "trigger-rule": {
+    "and": [
+      {
+        "match": {
+          "type": "payload-hash-sha1",
+          "secret": "$WEBHOOK_SECRET",
+          "parameter": {
+            "source": "header",
+            "name": "X-Hub-Signature"
+          }
+        }
+      },
+      {
+        "match": {
+          "type": "value",
+          "value": "refs/heads/main",
+          "parameter": {
+            "source": "payload",
+            "name": "ref"
+          }
+        }
+      }
+    ]
+  }
+}
