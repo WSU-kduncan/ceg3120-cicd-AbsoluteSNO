@@ -13,6 +13,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Get version from package.json
+        id: version
+        uses: ashley-taylor/get-json-property@v1.1.0
+        with:
+          path: ./angular-site/package.json
+          property: version
+      - name: Extract major and minor versions
+        id: vars
+        run: |
+          VERSION="${{ steps.version.outputs.value }}"
+          MAJOR=$(echo $VERSION | cut -d. -f1)
+          MINOR=$(echo $VERSION | cut -d. -f2)
+          echo "::set-output name=major::$MAJOR"
+          echo "::set-output name=minor::$MINOR"
+          echo "::set-output name=major_minor::$MAJOR.$MINOR"
+
       - name: Log in to DockerHub
         uses: docker/login-action@v2
         with:
@@ -27,4 +43,5 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/earl-ceg3120:latest
-            ${{ secrets.DOCKER_USERNAME }}/earl-ceg3120:${{ github.sha }}
+            ${{ secrets.DOCKER_USERNAME }}/earl-ceg3120:${{ steps.vars.outputs.major }}
+            ${{ secrets.DOCKER_USERNAME }}/earl-ceg3120:${{ steps.vars.outputs.major_minor }}
