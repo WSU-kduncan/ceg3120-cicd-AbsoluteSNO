@@ -1,0 +1,14 @@
+[Unit]
+Description=Webhook Listener for CI/CD
+After=network.target
+
+[Service]
+EnvironmentFile=/home/ubuntu/ceg3120-cicd-AbsoluteSNO/deployment/.env
+ExecStart=/usr/local/bin/webhook --debug --hooks /home/ubuntu/ceg3120-cicd-AbsoluteSNO/deployment/hooks.json
+WorkingDirectory=/home/ubuntu/ceg3120-cicd-AbsoluteSNO/deployment
+User=ubuntu
+Group=ubuntu
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
