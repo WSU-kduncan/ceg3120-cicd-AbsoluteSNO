@@ -25,6 +25,3 @@ docker run -d \
 echo "Verification:"
 echo "- Container status:"
 docker ps --filter "name=$CONTAINER_NAME" --format "table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Ports}}"
-
-echo "- Recent logs:"
-"deploy.sh" 32L, 838B
