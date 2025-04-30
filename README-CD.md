@@ -33,7 +33,6 @@
 * Going to [http://localhost:8080](http://localhost:8080) will send you to the website content from the Docker image.
 ## Part 2
 ### EC2 Instance Details
-* IP Address: 3.82.44.79
 * AMI Information: ami-0e449927258d45bc4
 * Instance Type: t2.medium
 * Volume size: 30 GiB
