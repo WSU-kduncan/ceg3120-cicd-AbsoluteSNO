@@ -73,6 +73,7 @@
  * Run the new one: ```docker run [flags] username/repoName:tag```
 * [Bash deploy script](./deployment/deploy.sh)
  * The script will output its progress, pay attention to output for testing.
+### Configuring a webhook Listener on EC2 Instance
 * To install adnanh's Webhook, follow these steps:
  * Install the binaries: ```wget https://github.com/adnanh/webhook/releases/download/v2.8.0/webhook-linux-amd64 -O webhook```
  * Make it executable: ```chmod +x webhook```
@@ -96,3 +97,14 @@
  * This will show you live output of the webhook service.
 * You use ```docker logs containerId``` to check the docker logs for your container, which can show you nginx starting, HTTP access logs, etc.
 * [My definition file](./deployment/hooks.json)
+### Configuring a Payload Sender
+* I chose GitHub to be my payload sender because I wanted my automation to be purely GitHub within workflows.
+* To enable sending payloads to webhooks using GitHub, you can go to settings at the top (marked with a gear),
+* Scroll down on the left bar until you see Code and Automation or Webhooks.
+* Click add webhook.
+* Paste this url into the Payload URL section: ```http://serverIpHere:9000/hooks/yourHookId```,
+* Switch Content type to application/JSON,
+* Paste your secret that corresponds with the secret in your definition file for authentication, and
+* Click Add webhook.
+### Configure a webhook Service on EC2 Instance
+* 
