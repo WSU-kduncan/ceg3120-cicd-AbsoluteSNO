@@ -7,7 +7,7 @@
     "trigger-rule": {
       "match": {
         "type": "value",
-        "value": "$WEBHOOK_SECRET",
+        "value": "webhookSecretAddedInAWSinstance",
         "parameter": {
           "source": "header",
           "name": "X-Webhook-Secret"
