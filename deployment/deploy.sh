@@ -1,27 +1,17 @@
 #!/bin/bash
 
-# Configuration
-CONTAINER_NAME="angular-app"
-IMAGE_NAME="absolutesno/earl-ceg3120:latest"
-HOST_PORT=8080
-CONTAINER_PORT=80
+# Navigate to the deployment directory
+cd /home/ubuntu/ceg3120-cicd-AbsoluteSNO/deployment
 
-# Step 1: Stop and remove existing container (if exists)
-echo "Removing existing container if present..."
-docker rm -f $CONTAINER_NAME 2>/dev/null || true
+# Pull the latest image from DockerHub
+docker pull absolutesno/earl-ceg3120:latest
 
-# Step 2: Pull the latest image
-echo "Pulling latest image..."
-docker pull $IMAGE_NAME
+# Stop the currently running container
+docker stop angular-site
 
-# Step 3: Run new container
-echo "Starting new container..."
-docker run -d \
-  --name $CONTAINER_NAME \
-  -p $HOST_PORT:$CONTAINER_PORT \
-  $IMAGE_NAME
+# Remove the stopped container
+docker rm angular-site
 
-# Verification
-echo "Verification:"
-echo "- Container status:"
-docker ps --filter "name=$CONTAINER_NAME" --format "table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Ports}}"
+# Run a new container with the latest image
+docker run -d -p 80:80 --name angular-site absolutesno/earl-ceg3120:latest
+
