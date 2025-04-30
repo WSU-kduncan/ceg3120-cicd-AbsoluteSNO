@@ -4,11 +4,11 @@ FROM node:18-alpine AS build
 WORKDIR /app
 
 # Install build dependencies
-COPY angular-site/package*.json ./
+COPY package*.json ./
 RUN npm install
 
 # Copy source
-COPY angular-site/ ./
+COPY . ./
 
 # Make sure ng CLI is executable
 RUN chmod +x node_modules/.bin/ng
