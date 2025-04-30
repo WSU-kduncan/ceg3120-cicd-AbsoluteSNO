@@ -1,9 +1,18 @@
 [
-    {
-        "id": "deploy-app",
-        "execute-command": "/home/ubuntu/ceg3120-cicd-AbsoluteSNO/deployment/deploy.sh",
-        "command-working-directory": "/home/ubuntu/ceg3120-cicd-AbsoluteSNO/deployment",
-        "response-message": "Deployment triggered."
+  {
+    "id": "deploy-app",
+    "execute-command": "/home/ubuntu/ceg3120-cicd-AbsoluteSNO/deployment/deploy.sh",
+    "command-working-directory": "/home/ubuntu/ceg3120-cicd-AbsoluteSNO/deployment",
+    "response-message": "Deployment triggered.",
+    "trigger-rule": {
+      "match": {
+        "type": "value",
+        "value": "your-shared-secret",
+        "parameter": {
+          "source": "header",
+          "name": "X-Webhook-Secret"
+        }
+      }
     }
+  }
 ]
-
