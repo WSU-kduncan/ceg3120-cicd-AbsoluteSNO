@@ -28,6 +28,9 @@ jobs:
             type=semver,pattern={{major}}
             type=semver,pattern={{major}}.{{minor}}
 
+      - name: Debug Docker tags
+        run: echo "${{ steps.meta.outputs.tags }}"
+
       - name: Log in to DockerHub
         uses: docker/login-action@v2
         with:
