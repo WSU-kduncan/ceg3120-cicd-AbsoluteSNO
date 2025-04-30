@@ -45,4 +45,4 @@ jobs:
       - name: Trigger deploy webhook
         run: |
           curl -X POST http://52.3.65.191:9000/hooks/deploy-app \
-        -H "X-Webhook-Secret: ${{ secrets.WEBHOOK_SECRET }}"
+          -H "X-Webhook-Secret: ${{ secrets.WEBHOOK_SECRET }}"
