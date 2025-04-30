@@ -40,6 +40,11 @@ jobs:
       - name: List repo contents
         run: ls -R
 
+      - name: Check Dockerfile exists
+        run: |
+          ls -l ./angular-site/Dockerfile
+          cat ./angular-site/Dockerfile
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
