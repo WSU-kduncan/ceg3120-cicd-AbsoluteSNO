@@ -71,7 +71,7 @@
   * You can see the id by using ```docker ps```
  * Remove the old image: ```docker rm containerIdOrName```
  * Run the new one: ```docker run [flags] username/repoName:tag```
-* [Bash deploy script](./deployment/deploy.sh)
+* [My deploy script](./deployment/deploy.sh)
  * The script will output its progress, pay attention to output for testing.
 ### Configuring a webhook Listener on EC2 Instance
 * To install adnanh's Webhook, follow these steps:
@@ -107,4 +107,31 @@
 * Paste your secret that corresponds with the secret in your definition file for authentication, and
 * Click Add webhook.
 ### Configure a webhook Service on EC2 Instance
-* 
+* The webhook service file (webhook.service) has three sections with multiple subsections:
+ * Unit:
+  * Description: Describes what the file is for.
+  * After: When to start in relation to other systemd services
+ * Service
+  * EnviornmentFile: Loads in variables that should not be kept in the file itself.
+  * ExecStart: What webhook binary to launch.
+  * WorkingDirectory: The directory to run commands in.
+  * User: What user to run the hook as.
+  * Group: What group to run the hook as.
+  * Restart: What to do after a crash.
+ * Install:
+  * What target to reach before automatically starting the service.
+* To enable the webhook service, move the service file into the systemd directory.
+ * Here's a command: ```sudo cp webhook.service /etc/systemd/system/webhook.service```
+* To enable and start it, systemctl must recognize that it is there, so first run these commands:
+ * ```sudo systemctl daemon-reexec```
+ * ```sudo systemctl daemon-reload```
+* Next, enable and start the service:
+ * ```sudo systemctl enable webhook```
+ * ```sudo systemctl start webhook```
+* To verify that Webhook is capturing payloads and triggering our bash script, you can check webhook's status:
+ * ```sudo systemctl status webhook```
+* You can also simulate a webhook trigger in your terminal:
+ * ```curl -X POST http://serverIpHere:9000/hooks/yourHookId```
+* You can also monitor the logs from webhook:
+ * ```sudo journalctl -u webhook.service -f```
+* [My service file](./deployment/webhook.service)
