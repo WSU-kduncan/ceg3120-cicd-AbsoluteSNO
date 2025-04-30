@@ -41,4 +41,4 @@
  * Outbound: All traffic
 * Justification:
  * Only I need to ssh into my instance and serve content to myself.
-* SSH Command: ssh -i ./keys/labsuserP5.pem ubuntu@3.82.44.79
+* SSH Command: ssh -i ./keys/labsuser.pem ubuntu@52.3.65.191
