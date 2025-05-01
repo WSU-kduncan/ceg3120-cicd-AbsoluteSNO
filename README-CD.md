@@ -2,19 +2,19 @@
 * The goal of this project is to continue the development pipeline from Project 4. This project focuses on the deployment part, rather than the development part.
 * Tools used in this project:
  * GitHub
-  * File storage and automation
+   * File storage and automation
  * DockerHub
-  * Docker image storage
+   * Docker image storage
  * AWS
-  * Remote hosting
+   * Remote hosting
  * Webhook
-  * Remote triggering
+   * Remote triggering
  * Angular
-  * Hosts website content
+   * Hosts website content
  * WSL 2
-  * Creates a virtual Linux enviornment for Windows users to run Linux commands.
+   * Creates a virtual Linux enviornment for Windows users to run Linux commands.
  * Mermaid
-  * Integrates diagrams into GitHub
+   * Integrates diagrams into GitHub
 ## Diagram
 ```mermaid
 flowchart TD
