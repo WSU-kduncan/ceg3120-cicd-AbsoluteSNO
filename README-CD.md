@@ -122,7 +122,7 @@ flowchart TD
   * Remove used files,
   * and Stop all processes.
 * If the workflow file is used in a different repo, you must do the following:
-  * Add DOCKER_USERNAME and DOCKER_TOKEN to GitHub secrets,
+  * Add DOCKER_USERNAME, DOCKER_TOKEN, and WEBHOOK_SECRET to GitHub secrets,
   * Either change line 46 to correctly identify the Dockerfile or put it in ./angular-site/,
   * and Change line 25 to your Dockerhub repo name.
 ### Testing & Validating
