@@ -1,12 +1,117 @@
 # Continuous Deployment Project Overview
+* The goal of this project is to continue the development pipeline from Project 4. This project focuses on the deployment part, rather than the development part.
+* Tools used in this project:
+ * GitHub
+  * File storage and automation
+ * DockerHub
+  * Docker image storage
+ * AWS
+  * Remote hosting
+ * Webhook
+  * Remote triggering
+ * Angular
+  * Hosts website content
+ * WSL 2
+  * Creates a virtual Linux enviornment for Windows users to run Linux commands.
+ * Mermaid
+  * Integrates diagrams into GitHub
+## Diagram
+```mermaid
+flowchart TD
+ subgraph s1["GitHub"]
+        n3["Workflow"]
+        n5["Dockerfile"]
+        n7["Docker Image:latest"]
+        n14["Website Files"]
+        n20["Docker Image:Major"]
+        n21["Docker Image:Major.Minor"]
+        n22["Deploy Script"]
+        n25["Webhook Service File"]
+        n28["Webhook Definition File"]
+  end
+ subgraph s3["AWS Instance"]
+        n10["Webhook"]
+        n12["DockerImage"]
+        n17["Deploy Script"]
+        n26["Webhook Service File"]
+        n29["Webhook Definition File"]
+  end
+ subgraph n12["DockerImage"]
+        n13["Angular"]
+  end
+ subgraph s4["DockerHub"]
+        n11["Docker Image:latest"]
+        n18["Docker Image:Major"]
+        n19["Docker Image:Major.Minor"]
+  end
+ subgraph s5["Developer"]
+        n15["Website Files"]
+        n23["Deploy Script"]
+        n24["Webhook Service File"]
+        n27["Webhook Definition File"]
+        n30["Dockerfile"]
+  end
+    n3 -- Instructions to build Docker image --> n5
+    n5 -- Creates in tandem with Workflow --> n7
+    n3 -- Instructs Docker Image to be pushed to DockerHub --> n7
+    n7 -- Pushed to DockerHub every update --> n11
+    n3 -- Triggered when finished pushing to DockerHub --> n10
+    n11 -- Pulled by Deploy Script --> n12
+    n13 -- Serves content --> n9["Website Content"]
+    n15 --> n16["Push with changes"]
+    n16 -- Updated Website Files --> n14
+    n16 -- Triggers Workflow --> n3
+    n10 -- Triggers Deploy Script --> n17
+    n17 -- Pulls Docker Image from public DockerHub Repository --> s4
+    n5 -- "<span style=color:>Creates in tandem with Workflow</span>" --> n20 & n21
+    n20 -- Pushed to DockerHub every Major release (incompatible API changes) --> n18
+    n21 -- Pushed to DockerHub every Minor release (backwards compatible functionality) --> n19
+    n3 -- Sends Authentication information --> s4
+    s4 -- Sends success or failure to authenticate --> n3
+    n22 -- Pulled from GitHub --> n17
+    n23 --> n16
+    n16 -- Updated Deploy Script --> n22
+    n24 --> n16
+    n16 -- Updated Service file --> n25
+    n25 -- Pulled from GitHub --> n26
+    n26 -- Tells where the Deploy Script is --> n10
+    n27 --> n16
+    n16 -- Updated Definition File --> n28
+    n14 -- Pulled from GitHub --> n29
+    n3 -- Authenticates Webhook trigger with shared secret --> n29
+    n29 -- Gives the 'okay' after shared secret authenctication --> n10
+    n30 --> n16
+    n16 -- Updated Dockerfile --> n5
+
+    n14@{ shape: rect}
+    n20@{ shape: rect}
+    n21@{ shape: rect}
+    n22@{ shape: rect}
+    n25@{ shape: rect}
+    n28@{ shape: rect}
+    n10@{ shape: rect}
+    n17@{ shape: rect}
+    n26@{ shape: rect}
+    n29@{ shape: rect}
+    n18@{ shape: rect}
+    n19@{ shape: rect}
+    n23@{ shape: rect}
+    n24@{ shape: rect}
+    n27@{ shape: rect}
+    n30@{ shape: rect}
+    n16@{ shape: rect}
+```
+## What is not working in this project
+* I could not get the proper webhook trigger to be done after the workflow was complete and had pushed images to DockerHub. I chose to trigger the webhook inside the workflow after it had pushed to DockerHub. I believe there is a solution to this by instead using DockerHub as the Payload Sender.
+
 ## Part 1
 ### Generating Tags
 * To see tags in a Git repo, you can run this command while inside the repo directory: ```git tag --list```
 * You can also go to the repo's home page and click the ```Tags``` button under the Releases category on the right.
 * To generate a tag, run ```git tag -a vX.X.X```.
 * To push the tag, you can run ```git push vX.X.X```.
-### Semantic Versioning Container Images with GitHub Actitaons
-* My workflow file is [build-and-push.yml](./.github/workflows/build-and-pushmyml).
+### Semantic Versioning Container Images with GitHub Actions
+* My workflow file is [build-and-push.yml](./.github/workflows/build-and-push.yml).
 * In order, the workflow file will do the following:
   * Create an Ubuntu image to run code on,
   * Pull from my repo to work on its content,
@@ -135,3 +240,17 @@
 * You can also monitor the logs from webhook:
  * ```sudo journalctl -u webhook.service -f```
 * [My service file](./deployment/webhook.service)
+
+# Resources Used
+* [GitHub actions documentation](https://docs.github.com/en/actions)
+* [GitHub secrets documentation](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions)
+* [GitHub webhooks documentation](https://docs.github.com/en/webhooks)
+* [Docker documentation](https://docs.docker.com)
+* [Docker Hub documentation](https://docs.docker.com/docker-hub/)
+* [Adnanh's Webhook documentation](https://github.com/adnanh/webhook)
+* [Ubuntu documentation](https://help.ubuntu.com)
+* [Mermaid documentation](https://mermaid.js.org/intro/)
+
+## AI Used
+* ChatGPT Model 4
+ * "I can't install Adnanh's Webhook using the directions on their repo. Can I get your instructions?"
