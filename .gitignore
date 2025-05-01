@@ -1,2 +1,4 @@
 .env
 deployment/.env
+hooks.json
+deployment/hooks.json
