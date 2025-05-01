@@ -145,7 +145,7 @@ flowchart TD
  * Inbound: All traffic from my home IP (184.57.29.80/32), all traffic to port 9000.
  * Outbound: All traffic
 * Justification:
- * Only I need to ssh into my instance and serve content to myself, but GitHub needs to trigger my webhook.
+ * Only I need to ssh into my instance and serve content to myself, but GitHub needs to trigger my webhook. The instance also needs to serve content, so all outbound is allowed.
 ### Docker Setup on OS on the EC2 instance
 * To install docker on Ubuntu 24.04.2 LTS, follow these steps:
  * Start by updating your package manager by using ```sudo apt update```
