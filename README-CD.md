@@ -101,9 +101,6 @@ flowchart TD
     n30@{ shape: rect}
     n16@{ shape: rect}
 ```
-## What is not working in this project
-* I could not get the proper webhook trigger to be done after the workflow was complete and had pushed images to DockerHub. I chose to trigger the webhook inside the workflow after it had pushed to DockerHub. I believe there is a solution to this by instead using DockerHub as the Payload Sender.
-
 ## Part 1
 ### Generating Tags
 * To see tags in a Git repo, you can run this command while inside the repo directory: ```git tag --list```
